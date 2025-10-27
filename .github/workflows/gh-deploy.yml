@@ -1,34 +1,41 @@
-# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# This workflow builds and deploys the Ubuntu portfolio to GitHub Pages
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Node.js CI
+name: Deploy Ubuntu Portfolio
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [16.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "yarn"
-      - name: Installing Packages 🥁
-        run: yarn install
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
 
-      - name: Building 🧱
+      - name: Setup Node.js 🟢
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'yarn'
+
+      - name: Install dependencies 📦
+        run: yarn install --frozen-lockfile
+
+      - name: Build project 🏗️
         run: yarn build
         env:
           # Add your own environment variables here
@@ -37,12 +44,24 @@ jobs:
           # NEXT_PUBLIC_TEMPLATE_ID: your_emailjs_template_id
           # NEXT_PUBLIC_USER_ID: your_emailjs_user_id
 
-      - name: Exporting Bundle Files 🎪
+      - name: Export static files 📤
         run: yarn export
-      - run: touch ./out/.nojekyll
 
-      - name: Deploy to Github-Pages 🚀
-        uses: JamesIves/github-pages-deploy-action@4.1.5
+      - name: Add .nojekyll file 🚫
+        run: touch ./out/.nojekyll
+
+      - name: Upload artifact 📁
+        uses: actions/upload-pages-artifact@v3
         with:
-          branch: gh-pages # The branch the action should deploy to.
-          folder: out # The folder the action should deploy.
+          path: ./out
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages 🚀
+        id: deployment
+        uses: actions/deploy-pages@v4
