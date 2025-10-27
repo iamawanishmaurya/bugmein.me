@@ -1,5 +1,7 @@
 # Web simulation of UbuntuOS
 
+> **Fork Notice:** This project is a fork of the original [vivek9patel.github.io](https://github.com/vivek9patel/vivek9patel.github.io) portfolio. All credits go to the original creator [Vivek Patel](https://github.com/vivek9patel).
+
 This is a personal portfolio website of theme Ubuntu 20.04, made using Next.js & tailwind CSS.
 If you want to edit this. Clone this project and edit the files in `/src/components`.
 
@@ -7,8 +9,6 @@ To run this on localhost
 type `npm start` and when u are done coding type `npm run build` to build your app.
 
 _NOTE: if you have yarn just replace `npm start` and `npm run build` with `yarn start` and `yarn build`._
-
-<a href="https://www.buymeacoffee.com/vivek9patel" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 140px !important;" ></a>
 
 ### To make the contact form work
 
@@ -30,7 +30,7 @@ into it. Replace \*your user id and your service ID with your values in your Ema
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=vivek9patel/vivek9patel.github.io&type=Date)](https://star-history.com/#vivek9patel/vivek9patel.github.io&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=iamawanishmaurya/bugmein.tech&type=Date)](https://star-history.com/#iamawanishmaurya/bugmein.tech&Date)
 
 ## This project was made using Create Next App! Here is the scripts that u can run.
 
